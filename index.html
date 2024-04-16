@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+</head>
+<body>
+    
+<script>
+
+//EJERCICIO 1
+
+const arrNames = [
+    {id: 1, name: 'Pepe'},
+    {id: 2, name: 'Juan'},
+    {id: 3, name: 'Alba'},
+    {id: 4, name: 'Toby'},
+    {id: 5, name: 'Lala'}
+];
+
+function getObjectById(arr, id) {   // Definimos una funcion con dos paramateros
+    for (let i = 0; i < arr.length; i++) { 
+        if (arr[i].id === id) {    // Dentro de este bucle comparamos y buscamos el id de cada objeto con el id que estamos buscando
+            return arr[i];  // Devuelve el objeto cuyo id coincide con el id que se busca
+        }
+    }
+    return null;  // Retorna null si no se encuentra el objeto con el id dado
+}
+
+const objectWithId3 = getObjectById(arrNames, 3);   // Llamamos a la funcion arrNames con el id que queremos encontrar "3"
+console.log(objectWithId3);    
+
+
+//EJERCICIO 2
+
+const arrDirty = [NaN, 0, 5, false, -1, '', undefined, 3, null, 'test'];  // Se crea un array que se llama "arrDirty" con diferentes valores
+
+function isTruthy(value) {   // Se crea una funcion la cual devuelve true si el valor es truthy, de lo contrario devuelve false
+
+    return !!value;   // Utilizamos doble negación para convertir el valor a booleano
+}
+
+const arrClean = arrDirty.filter(isTruthy); // Creamos un nuevo array que se llama "arrClean" para que contenga solo los valores truthy. 
+                                            // El metodo filter recorre todo el arrDirty y ejecuta la funcion "isTruthy" hasta que devuelva un valor true el cual se incluira en el array "arrClean".
+
+console.log(arrClean);  // Imprime los valores que son truthy del array "arrDirty" que se han incluido al array creado anteriormente "arrClean"
+
+
+//EJERCICIO 3
+
+const arrCities = [  //Definimos el array "arrCities" con diferentes objetos.
+
+  {city: 'Logroño', country: 'Spain', capital: false},
+  {city: 'Paris', country: 'France', capital: true},
+  {city: 'Madrid', country: 'Spain', capital: true},
+  {city: 'Rome', country: 'Italy', capital: true},
+  {city: 'Oslo', country: 'Norway', capital: true},
+  {city: 'Jaén', country: 'Spain', capital: false}
+];
+
+const nonCapitalCitiesSpain = arrCities.filter(city => city.country === 'Spain' && !city.capital);  // Utilizamos el metodo filter para crear un nuevo array "nonCapitalCitiesSpain". 
+                                                                                                    // Este metodo filtra los elementos del array segun la condicion especificada en el filtro.
+                                                                                                    // En el filtro se comprueba primero si la ciudad es de "España" y si la ciudad no es capital. 
+
+console.log(...nonCapitalCitiesSpain);  // Se imprime en la consola, todas las ciudades las cuales no son capitales de España
+
+
+//EJERCICIO 4 
+
+// Definimos los 3 arrays
+const arrNumber1 = [1, 2, 3];
+const arrNumber2 = [1, 2, 3, 4, 5];
+const arrNumber3 = [1, 4, 7, 2];
+
+// Utilizamos el metodo filter en el "arrNumber1" para iterar cada elemento
+// El metodo ademas comprueba si los numeros del "arrNumber1" coinciden en alguno de los otros dos arrays utilizando el metodo includes el cual busca "num" en los arrays
+// Cuando un numero cumple la condicion de estar en ambos arrays , hace que se incluya en el array "intersection"
+const intersection = arrNumber1.filter(num => arrNumber2.includes(num) && arrNumber3.includes(num)); 
+
+console.log(intersection); // Imprime los numeros presentes en los tres arrays, los cuales han sido pasados al nuevo array "intersection"
+
+
+//EJERCICIO 5
+
+//Defino el array "arrCities2" con diferentes objetos
+const arrCities2 = [
+  {city: 'Logroño', country: 'Spain', capital: false},
+  {city: 'Bordeaux', country: 'France', capital: false},
+  {city: 'Madrid', country: 'Spain', capital: true},
+  {city: 'Florence', country: 'Italy', capital: true},
+  {city: 'Oslo', country: 'Norway', capital: true},
+  {city: 'Jaén', country: 'Spain', capital: false}
+];
+
+arrCities2.forEach(city => { // Utilizamos un forEach para iterar cada objeto del array
+  if (!city.capital) { // Verificamos si la ciudad no es capital 
+    city.isSpain = city.country === 'Spain'; // Si la ciudad no es capital, establecemos la propiedad isSpain en true, si el país es España, de lo contrario, será false.
+    delete city.country; // Eliminamos la propiedad country del objeto
+    delete city.capital; // Eliminamos la propiedad de capital del objeto
+  }
+});
+
+console.log(arrCities2[0]); // Imprimimos el objeto modificado del array
+
+
+// EJERCICIO 6
+
+function roundTo(number, decimals) { // Esta linea define una función llamada "roundTo"
+  const multiplier = Math.pow(10, decimals); // Esta linea calcula el numero multiplicador el cual es 10 elevado a un numero decimal, esto es para convertirlo en numero entero
+  const roundedNumber = Math.round(number * multiplier); // Aqui multiplicamos el numero por el multiplicador calculado en el paso anterior. Luego utilizamos "Math.round" para redondear el numero entero
+  return roundedNumber / multiplier; // Finalmente dividimos el numero redondeado por el multiplicador para mover los decimales a su posicion original. Esto nos da el numero redondeado
+}
+
+const roundedResult1 = roundTo(2.123, 2); //Aqui llamamos a la funcion "roundTo" y realizamos ejemplos de su uso
+console.log(roundedResult1); 
+
+const roundedResult = roundTo(1.123456789, 6);
+console.log(roundedResult);
+
+
+//EJERCICIO 7
+
+
+function returnFalsyValues(obj, func) { //Definimos la funcion que tiene dos parametros
+  const result = {}; //Inicializamos y creamos un objeto vacio
+
+  for (const key in obj) { //Iteramos cada campo utilizando un bucle for... in
+    const value = obj[key]; // Obtenemos el valor asociado a la clave del objeto
+    if (!func(value)) { // Si el valor no cumple con la condicion especificada, el codigo if se ejecuta    
+      result[key] = value; // Se añade al objeto result
+    }
+  }
+
+  return result; //Finalmente devolvemos el objeto que contiene los campos cuyos valores no cumplen la condicion especificada anteriormente
+}
+
+const result = returnFalsyValues({ a: 1, b: '2', c: 3 }, x => typeof x === 'string'); //Ejemplo de uso
+console.log(result); 
+
+
+//EJERCICIO 8
+
+function fromBytesToFormattedSizeUnits(bytes, precision = 3) { // Definimos la funcion con dos parametros
+    const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']; // Declaramos un array con las unidades de tamaño (Bytes - Yotabytes)
+    let index = 0; // Inicializamos la variable index en 0. Esta variable determinara la posicion de la unidad de tamaño del array "units"
+    while (bytes >= 1024 && index < units.length - 1) { // Utilizamos un bucle While para dividir los bytes sucesivamente entre 1024 hasta conseguir un valor de rango adecuado.                                                   
+    bytes /= 1024; // Este bucle finaliza cuando conseguimos un valor < 1024 o cuando index alcanza el numero superior del array "Units"
+        index++;
+    }
+    return bytes.toPrecision(precision) + units[index]; // Utilizamos el metodo toPrecision para truncar el resultado al numero de digitos especificado por precision "3".
+                                                        // Luego se concatena el resultado con la unidad de tamaño correspondiente.
+}
+
+const example1 = fromBytesToFormattedSizeUnits(1000); // Ejemplo practico
+console.log(example1); // Imprime por consola 
+
+const example2 = fromBytesToFormattedSizeUnits(123456789); // Ejemplo practico
+console.log(example2); // Imprime por consola
+
+const example3 = fromBytesToFormattedSizeUnits(-12145489451.5932, 5); // Ejemplo practico
+console.log(example3); // Imprime por consola
+ 
+//EJERCICIO 9
+
+
+function toLowercaseKeys(obj) { // Definimos la funcion "toLowercaseKeys"
+  const result = {}; // Inicializamos un nuevo objeto vacio "result"
+  for (const key in obj) { // Utilizamos un bucle for... in para iterar todas las keys del objeto
+    result[key.toLowerCase()] = obj[key]; // En cada iteracion, convertimos la key en minusculas utilizando el metodo "toLowerCase" y la asignamos como clave al nuevo obj "result"
+  }
+
+  return result; // Devolvemos el nuevo objeto creado que contiene las claves en minusculas
+}
+
+const myObject = {Name: 'Charles', ADDress: 'Home Street'}; // Ejemplo de su uso con un ejemplo
+const myObjLowercase = toLowercaseKeys(myObject);
+console.log(myObjLowercase);  // Mostramos el resultado mediante consola
+
+
+//EJERCICIO 10
+
+function removeHTMLTags(str) { //Definimos la funcion "removeHTMLTags" que toma un parametro "str"
+    return str.replace(/<[^>]*>/g, '');  //Devuelve el String modificado sin las etiquetas HTML O XML
+    /*
+/: Indica el inicio de la expresión regular
+<: Es el comienzo de una etiqueta HTML o XML
+[^>]*: Coincide con cualquier caracter que no sea >, repetido 0 o más veces (*)
+>: Es el final de una etiqueta HTML o XML
+/: Indica el final de la expresión regular
+g: Indica que la búsqueda debe realizarse de forma global en todo el string
+    */
+}
+
+const result2 = removeHTMLTags('<div><span>lorem</span> <strong>ipsum</strong></div>'); //Ejemplo practico
+
+console.log(result2); // Hace que aparezca por consola
+
+
+//EJERCICIO 11
+
+function splitArrayIntoChunks(array, chunkSize) { // Definimos la funcion con dos parametros
+    const chunks = []; // Inicializamos un array vacio llamado "chunks"
+    for (let i = 0; i < array.length; i += chunkSize) { // Creamos un bucle para dividir el array el cual comienza en el indice "0" y se repite hasta haber recorrido todo el array. En cada iteracion i aumenta en "chunksize"
+        chunks.push(array.slice(i, i + chunkSize)); // Se corta una porcion del array usando "slice()". El primer i indica el inicio del corte y el segundo parametro indica el final del corte "i + chunksize". El segmento cortado se agrega a "chunks" mediante el metodo push
+    }
+    return chunks; // Devuelve el array chunks que contiene los subarrays                                                                     
+}
+
+const result3 = splitArrayIntoChunks([1, 2, 3, 4, 5, 6, 7], 3); // Ejemplo practico
+result3.forEach(subarray => { // Iterando sobre los subarrays e imprimiendo sus elementos
+    console.log(subarray); // Imprime por consola los subarray
+});
+</script>
+
+</body>
+</html>
